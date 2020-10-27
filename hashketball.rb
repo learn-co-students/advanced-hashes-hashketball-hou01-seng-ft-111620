@@ -1,4 +1,6 @@
 # Write your code below game_hash
+require 'pry'
+
 def game_hash
   {
     home: {
@@ -126,4 +128,94 @@ def game_hash
   }
 end
 
-# Write code here
+def num_points_scored(name)
+  game_hash.each do |team, team_info|
+    game_hash[team].each do |team_info, inner_values|
+      if team_info == :players
+        game_hash[team][:players].each do |index|
+          if name == index[:player_name]
+            return index[:points]
+          end
+        end
+      end
+    end
+  end
+end
+
+def shoe_size(name)
+  game_hash.each do |team, team_info|
+    game_hash[team].each do |team_info, inner_values|
+      if team_info == :players
+        game_hash[team][:players].each do |index|
+          if name == index[:player_name]
+            return index[:shoe]
+          end
+        end
+      end
+    end
+  end
+end
+
+def team_colors(team_name)
+  game_hash.each do |team, team_info|
+    if team_name == team_info[:team_name]
+      return team_info[:colors]
+    end
+  end
+end
+
+def team_names
+  teams = []
+  game_hash.each do |team, team_info|
+    teams.push(team_info[:team_name])
+  end
+  teams
+end
+
+def player_numbers(team)
+  team_numbers = []
+  game_hash.each do |home_or_away, team_data|
+    if team_data[:team_name] == team
+      game_hash[home_or_away].each do |team_data, inner_values|
+        if team_data == :players
+          game_hash[home_or_away][:players].each do |index|
+            team_numbers.push(index[:number])
+          end
+        end
+      end
+    end
+  end
+  team_numbers
+end
+
+def player_stats(name)
+  game_hash.each do |home_or_away, team_data|
+    game_hash[home_or_away].each do |team_data, inner_values|
+      if team_data == :players
+        game_hash[home_or_away][:players].each do |index|
+          if index[:player_name] == name
+            return index
+          end
+        end
+      end
+    end
+  end
+end
+
+def big_shoe_rebounds
+  biggest_shoe = 0
+  rebounds = 0
+  game_hash.each do |home_or_away, team_data|
+    game_hash[home_or_away].each do |team_data, inner_values|
+      if team_data == :players
+        game_hash[home_or_away][:players].each do |index|
+          if index[:shoe] > biggest_shoe
+            biggest_shoe = index[:shoe]
+            rebounds = index[:rebounds]
+          end
+        end
+      end
+    end
+  end
+  rebounds
+end
