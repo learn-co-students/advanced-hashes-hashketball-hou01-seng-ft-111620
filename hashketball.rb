@@ -1,3 +1,4 @@
+require 'pry'
 # Write your code below game_hash
 def game_hash
   {
@@ -127,3 +128,28 @@ def game_hash
 end
 
 # Write code here
+
+def num_points_scored(player_name)
+  
+ game_hash.each do |home, team_name|
+  team_name.each do |key, value|
+    #binding.pry
+    if key == :players 
+      
+     value.each do |key_2, detail|
+      # key_2[:player_name] == player_name
+        
+        if player_name == key_2[:player_name]
+          return key_2[:points]
+          #found_player == key_2[:points]
+          
+        end   
+      end
+    end
+    
+  end
+ end
+ #binding.pry
+end
+
+
