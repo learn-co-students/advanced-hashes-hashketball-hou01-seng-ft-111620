@@ -1,4 +1,5 @@
 # Write your code below game_hash
+require "pry"
 def game_hash
   {
     home: {
@@ -127,3 +128,71 @@ def game_hash
 end
 
 # Write code here
+# points scored
+def num_points_scored(playername)
+  game_hash.each do |away_home, keys|
+    keys[:players].each do |player|
+      return player[:points] if player[:player_name]==playername
+    end
+  end
+end
+# shoe size
+def shoe_size(playername)
+  game_hash.each do |away_home, keys|
+    keys[:players].each do |player|
+      return player[:shoe] if player[:player_name]==playername
+    end
+  end
+end
+# team colors 
+def team_colors(name)
+  game_hash.each do |location, team_data|
+    if team_data[:team_name] == name
+      return team_data[:colors]
+    end
+  end
+end
+# team names 
+def team_names
+  game_hash.collect do |location, team_data|
+    team_data[:team_name]
+  end
+end
+# player jersy numbers 
+def player_numbers(team_name)
+  game_hash.each do |home_away, keys|
+    if keys[:team_name] == team_name
+      return keys[:players].map { |player| player[:number] }
+    end
+  end
+end
+# Player stats 
+def player_stats(input)
+  game_hash.each do |team, team_info|
+    team_info.each do |key, value|
+      if key == :players
+        value.each do |player|
+          if input == player[:player_name]
+          
+            return player
+          end
+        end
+      end
+    end
+  end
+end
+# big shoe rebounds (what is this)
+def big_shoe_rebounds
+  biggest = 0
+  rebounds = 0
+  game_hash.each do |home_away, keys|
+    keys[:players].each do |player|
+      size = player[:shoe]
+      if size > biggest
+        biggest = size
+        rebounds = player[:rebounds]
+      end
+    end
+  end
+  rebounds
+end
